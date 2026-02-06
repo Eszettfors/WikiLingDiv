@@ -1,6 +1,7 @@
-# WikiLingDiv
+v# WikiLingDiv
 
-This is the code repository accompanying the paper "WikiLingDiv: a dataset for quantifying digital linguistic diversity based on Wikipedia page views" submitted to SIGHUM (LaTeCH-CLfL) 2026.
+This is the code repository accompanying the paper "WikiLingDiv: a dataset for quantifying digital linguistic diversity using
+Wikipedia pageviews" submitted to SIGHUM (LaTeCH-CLfL) 2026.
 
 
 # Licence
