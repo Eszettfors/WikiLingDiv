@@ -9,9 +9,11 @@ The code utilized for creating the dataset and deriving measures of diversity fr
 # Citation
 
 If you use the dataset, please cite:
-– Essfors, H. (2026). WikiLingDiv [Data set]. Zenodo. https://doi.org/10.5281/zenodo.18526766
+*  Essfors, H. (2026). WikiLingDiv [Data set]. Zenodo. https://doi.org/10.5281/zenodo.18526766
+
+
 If you use the dataset or the code in academic work, please also cite:
-– PLACEHOLDER
+* PLACEHOLDER
 
 # Licence
 This work is openly licensed via CC BY 4.0.
