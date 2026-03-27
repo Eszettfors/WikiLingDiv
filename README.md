@@ -3,6 +3,8 @@
 This is the code repository accompanying the paper "WikiLingDiv: a dataset for quantifying digital linguistic diversity using
 Wikipedia pageviews" submitted to SIGHUM (LaTeCH-CLfL) 2026.
 
+# Read the paper
+https://aclanthology.org/2026.latechclfl-1.19/
 
 # Explore the data
 https://f39e09-hannes-essfors.shinyapps.io/wikilingdiv_dashboard/ 
@@ -17,7 +19,7 @@ If you use the dataset, please cite:
 
 
 If you use the dataset or the code in academic work, please also cite:
-* PLACEHOLDER
+* Hannes Essfors and Andreas Baumann. 2026. WikiLingDiv: a dataset for quantifying digital linguistic diversity using Wikipedia page views. In Proceedings of the 10th Joint SIGHUM Workshop on Computational Linguistics for Cultural Heritage, Social Sciences, Humanities and Literature 2026, pages 202–211, Rabat, Morocco. Association for Computational Linguistics.
 
 
 
