@@ -1,6 +1,6 @@
 library(tidyverse)
 
-# this script takes the twitter data and generates diversity measures for each country and year
+# this script takes the wikipedia data and generates diversity measures for each country and year
 
 #read twitter data
 df_wiki = read_csv("data/final_dataset/country_year_lang_views.csv")
