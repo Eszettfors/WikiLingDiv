@@ -3,13 +3,6 @@ library(rnaturalearth)
 library(rnaturalearthdata)
 
 df_long = read_csv("data/processed/country_year_language_page_views.csv")
-wikipedia_countries = read_tsv("data/final_dataset/countries_wikipedia.tsv")
-wikipedia_countries = wikipedia_countries %>%
-  select(iso_code, iso_alpha3_code, name, data_risk_score, data_risk_classification)
-
-wikipedia_countries = wikipedia_countries %>%
-  mutate(iso_code = case_when(is.na(iso_code) ~ "NA",
-                                TRUE ~ iso_code))
 
 df_long = df_long %>% 
   mutate(country_code = case_when(is.na(country_code) ~ "NA",
@@ -21,40 +14,46 @@ ccs = df_long %>%
 
 country_data = rnaturalearth::ne_countries(scale = "large")
 country_data = country_data %>%
-  select(iso_a2_eh, continent, region_wb, income_grp) %>%
+  select(iso_a2_eh, iso_a3_eh, name, continent, region_wb, income_grp) %>%
   as_tibble() %>%
   select(!geometry)
 
 ccs = ccs %>%
-  left_join(wikipedia_countries, join_by("country_code" == "iso_code")) %>%
   left_join(country_data, join_by("country_code" == "iso_a2_eh"))
-  
-  
-# remove unknown country
+
+
+ccs %>%
+  filter(is.na(name))
+
+# BQ -> belongs to the netherlands
+# CX -> Belongs to australia
+# CC -> belongs to Australia
+# RE -> belongs to France
+# YT -> belongs to France
+# GP -> belongs to France
+# BV -> belongs to Norway
+# GF -> belongs to France
+# MQ -> belongs to France
+# SJ -> belongs to norway
+
+# solution: remove from country dataframe and merge the respective data in the wikipedia views dataframe
 ccs = ccs %>%
-  filter(!is.na(name))
-
-df_long = df_long %>%
-  filter(country_code != "unknown")
-
-df_long = df_long %>%
-  group_by(country_code, year, lang_id) %>%
-  summarize(page_views = sum(page_views))
+  filter(!country_code %in% c("RE", "YT", "GP", "MQ", "BV", "GF", "BQ", "CX", "CC", "SJ", "TK", "unknown"))
 
 
-# filter to countries not in rnaturalearthdata -adjust country code of those not in rnaturalearthdata
+# change language codes for territory
 df_long = df_long %>%
   mutate(country_code = case_when(country_code %in% c("RE",
-                                                      "YT",
-                                                      "GP",
-                                                      "GF",
-                                                      "MQ") ~ "FR",
-                                  country_code %in% c("CX",
-                                                      "CC") ~ "AU",
-                                  country_code == "BQ" ~ "NL",
-                                  country_code %in% c("BV", "SJ") ~ "NO",
-                                  country_code == "TK" ~ "NZ",
-                                  TRUE ~ country_code))
+                                            "YT",
+                                            "GP",
+                                            "GF",
+                                            "MQ") ~ "FR",
+                             country_code %in% c("CX",
+                                            "CC") ~ "AU",
+                             country_code == "BQ" ~ "NL",
+                             country_code %in% c("BV", "SJ") ~ "NO",
+                             country_code == "TK" ~ "NZ",
+                             TRUE ~ country_code))
 
 df_long = df_long %>%
   group_by(country_code, year, lang_id) %>%
