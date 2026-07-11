@@ -58,8 +58,8 @@ for (i in 1:length(months)){
 
 get_language_wikipedia_y_m = function(lang, year, month){
   # takes a langauge code and year and month and returns a dataframe with page views per country. If request isn't 200, return nothing
-  domain = paste0(lang, ".wikipedia")
-  request = GET(paste0(wiki_url, domain, "/all-access/spider/", year, "/", month), add_headers(`User-Agent` = "hannes.essfors@gmail.com"))
+  domain = paste0(lang, ".wikipedia.org")
+  request = GET(paste0(wiki_url, domain, "/all-access/", year, "/", month), add_headers(`User-Agent` = "hannes.essfors@gmail.com"))
 
   if(request$status_code != 200){
     return()
