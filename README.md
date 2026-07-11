@@ -3,10 +3,14 @@
 This is the code repository accompanying the paper "WikiLingDiv: a dataset for quantifying digital linguistic diversity using
 Wikipedia pageviews" submitted to SIGHUM (LaTeCH-CLfL) 2026.
 
+We generate a temperospatial dataset for studying digital linguistic diversity using the number of page views directed towards different language editions of Wikipedia in a given country and year.
+
 # Read the paper
+Here you can read the published paper:
 https://aclanthology.org/2026.latechclfl-1.19/
 
 # Explore the data
+We have developed a dashboard to study the temporal and spatial dynamics of the dataset:
 https://f39e09-hannes-essfors.shinyapps.io/wikilingdiv_dashboard/ 
 
 # Code
