@@ -119,13 +119,10 @@ get_language_wikipedia = function(language){
   df = df %>%
     select(!views_ceil)
   
-  return(df)
-  
+  return(df) 
 }
 
-
 # get all language wikipedias for all years and write to csv
-
 i = 0
 for (language in lang_wiki_codes){
   
@@ -149,7 +146,3 @@ for (language in lang_wiki_codes){
   output = paste0("data/raw/lang_data/lang_ts/",language,"_ts.csv")
   write_csv(df, output)
 }
-
-output = paste0("data/raw/lang_data/lang_ts/",language,"_ts.csv")
-write_csv(df_se, output)
-
