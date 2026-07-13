@@ -404,7 +404,7 @@ df %>%
   group_by(country_code) %>%
   summarize(page_views = sum(page_views)) %>%
   ggplot(aes(x = page_views)) + 
-  geom_histogram(color = )
+  geom_histogram()
 
 # differentiate on continent
 df %>%
@@ -606,8 +606,7 @@ df_geo %>%
   guides(color = "none",
          alpha = "none") + 
   theme_minimal() + 
-  theme_void() + 
-  scale_breaks
+  theme_void()
 
 lang_map = df_geo %>%
   ggplot() +
@@ -684,6 +683,4 @@ df %>%
        y = "language",
        title = "most commonly occuring dominant language") + 
   geom_label(aes(label = n_countries))
-
-
 
