@@ -2,9 +2,10 @@ library(tidyverse)
 
 # this script takes the wikipedia data and generates diversity measures for each country and year
 
-#read twitter data
+#read wiki data
 df_wiki = read_csv("data/final_dataset/country_year_lang_views.csv")
 df_langs = read_csv("data/final_dataset/language_data.csv")
+sim_m = read_rds("data/processed/lexical_similarity_matrix.rds")
 
 # fix namibia
 df_wiki = df_wiki %>%
@@ -20,7 +21,6 @@ langs = df_wiki %>%
 
 # generate diversity
 # for each year, generate q = 0, q = 1 and q = 2 for each muncipality both naive and non naive
-
 
 get_prop_vec = function(counts){
   #takes a vector with counts and turns it into a proportion vector
@@ -114,13 +114,12 @@ get_shannon_diversity = function(langs, counts, sim_m){
 }
 langs2 = c("swe", "dan", "deu", "eng")
 test_vec2 = c(20, 10, 5, 5)
-get_shannon_diversity(langs2, test_vec2, sim_test)
+get_shannon_diversity(langs2, test_vec2, sim_m)
 
-langs3 = c("dan", "swe", "deu", "eng")
+langs3 = c("dan", "swe", "deu", "hun")
 test_vec3 = c(10, 20, 5, 5)
 
-get_shannon_diversity(langs3, test_vec3, sim_test)
-
+get_shannon_diversity(langs3, test_vec3, sim_m)
 
 
 get_diversity_q = function(langs, counts, sim_m, q = 0){
@@ -155,9 +154,9 @@ get_diversity_q = function(langs, counts, sim_m, q = 0){
   return(D)
 }
 
-get_diversity_q(langs, test_vec, sim_test, q = 2)
-get_diversity_q(langs2, test_vec2, sim_test, q = 1)
-get_diversity_q(langs3, test_vec3, sim_test, q = 1)
+
+get_diversity_q(langs2, test_vec2, sim_m, q = 1)
+get_diversity_q(langs3, test_vec3, sim_m, q = 1)
 
 
 get_naive_diversity_q = function(langs, counts, q = 0){
@@ -174,8 +173,16 @@ get_naive_diversity_q = function(langs, counts, q = 0){
   
   return(D)
 }
-get_diversity_q(langs2, test_vec2, sim_test, q = 2)
+
+langs2
+langs3
+
+get_diversity_q(langs2, test_vec2, sim_m, q = 2)
 get_naive_diversity_q(langs2, test_vec2, q = 2)
+
+get_diversity_q(langs3, test_vec3, sim_m, q = 2)
+get_naive_diversity_q(langs3, test_vec3, q = 2)
+
 
 get_mean_pairwise_dissimilarity = function(sim_m){
   # This function takes a similarity matrix and calculates the mean pairwise similarities between the languages
@@ -189,10 +196,11 @@ div_measures = df_wiki %>%
   summarize(tot_views = sum(page_views),
             richness = get_richness(page_views),
             exp_shannon = get_exp_shannon(page_views),
-            inv_simpson = get_inv_simp(page_views))
-
+            inv_simpson = get_inv_simp(page_views),
+            lex_div_q_0 = get_diversity_q(ISO6393, page_views, sim_m, q = 0),
+            lex_div_q_1 = get_diversity_q(ISO6393, page_views, sim_m, q = 1),
+            lex_div_q_2 = get_diversity_q(ISO6393, page_views, sim_m, q = 2))
 
 # export
 write_csv(div_measures, file = "data/final_dataset/diversity_measures.csv")
-
 
